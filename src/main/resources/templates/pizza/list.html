@@ -10,7 +10,7 @@
       <h1>Le nostre pizze</h1>
       <hr/>
       <div th:if="${#lists.isEmpty(pizzaList)}">
-        <h1>Spiacenti, non è disponibile un menù di pizze, al momento</h1>>
+        <h1>Spiacenti, non è disponibile un menù di pizze, al momento!</h1>
       </div>
       <div th:unless="${#lists.isEmpty(pizzaList)}">
         <table class="table mb-5">
@@ -26,10 +26,16 @@
             <tr th:each="p : ${pizzaList}">
               <td th:text="${p.name}"></td>
               <td th:text="${p.description}"></td>
-              <td th:text="${p.getFormattedPrice()}"></td>
+              <td th:text="${p.getFormattedPrice(p.price)}"></td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <hr/ class="mb-5">
+    <div class= "mt-5">
+      	<h2>
+      		Vuoi aggiungere una nuova pizza al menù? <span><a class="btn btn-danger" th:href="@{/pizzas/add}">Clicca qui!</a></span>
+      	</h2>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

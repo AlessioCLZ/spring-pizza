@@ -56,7 +56,7 @@ public class Pizza {
 	
 	public String getFormattedPrice(Double price)
 	{
-		DecimalFormat df = new DecimalFormat ("#,00€");
+		DecimalFormat df = new DecimalFormat ("#.00€");
 		
 		return df.format(price);
 	}
