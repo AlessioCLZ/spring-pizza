@@ -45,14 +45,11 @@ public class PizzeriaController {
 	
 	@PostMapping("/pizzas/add") //sezione di aggiunta della pizza al database
 	  public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br) {
-	    // testo se ci sono errori di validazione
 	    if (br.hasErrors()) {
-	      // se ci sono errori non salvo il book su database ma ritorno alla form precaricata
-	      return "/pizzas/add";
+	      return "/pizza/add";
 	    } else {
-	      // se non ci sono errori salvo il book che arriva dalla form
 	      repo.save(formPizza);
-	      return "redirect:/pizzas"; // non cercare un template, ma fai la HTTP redirect a quel path
+	      return "redirect:/pizzas"; 
 	    }
 	  }
 }
