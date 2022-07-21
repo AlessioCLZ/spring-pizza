@@ -5,12 +5,24 @@
     <title>Pizzeria</title>  
   </head>
   <body >
-    <div th:replace="fragments :: navbar('index')"></div>
-    <div class="container text-center w-75 mt-3">
+    <header>
+      <div th:replace="fragments :: navbar('index')"></div>
+    </header>
+    <main>
+      <div class="container text-center w-75 mt-3">
         <h1>Pizzeria</h1>
         <hr>
         <h2>Benvenuto nella nostra pizzeria!</h2>
+        <hr>
+        <h3>
+          Dai un'occhiata alla nostra selezione di pizze!
+        </h3>
+        <a class="btn btn-danger" th:href="@{/pizzas}">Clicca qui!</a>
     </div>
+    </main>   
+    <footer>
+      <div th:insert="fragments :: footer"></div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   </body>
 </html>
