@@ -31,6 +31,16 @@ public class Pizza {
 	@DecimalMin("0.00")
 	@DecimalMax("100.00")
 	private Double price;
+	
+	private boolean active = true;
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	public Integer getId() {
 		return id;
