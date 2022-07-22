@@ -18,6 +18,7 @@
   			method="POST"
   		>
   			<div class="row">
+  			<input type="hidden" th:field="*{id}">
 	  			<div class="col-6 mb-3">
 	  				<label class="form-label" for="name">Nome</label>
 	  				<input type="text" id="nae" class="form-control" th:field="*{name}" th:errorClass="is-invalid">

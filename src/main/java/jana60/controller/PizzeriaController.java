@@ -53,14 +53,15 @@ public class PizzeriaController {
 	  public String save(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult br, Model model) {
 		
 		boolean hasErrors = br.hasErrors();
-		boolean validateName=true;
+		boolean validateName = true;
 		
-		if(formPizza.getId() != null)
+		if(formPizza.getId() != null) //vedo se la pizza inserita da form ha un id
 		{
-			Pizza notUpdatedPizza = repo.findById(formPizza.getId()).get();
-			if (notUpdatedPizza.getName().equals(formPizza.getName()))
-				validateName= false;
+			Pizza notUpdatedPizza = repo.findById(formPizza.getId()).get(); //se lo ha la raccolgo dal DB
+			if (notUpdatedPizza.getName().equalsIgnoreCase(formPizza.getName())) //se ha un nome uguale a quella presente nel DB
+				validateName= false; //non richiedo il controllo del nome
 		}
+		
 		if(validateName && repo.countByName(formPizza.getName()) > 0)
 		{
 			br.addError(new FieldError("pizza", "name", "I nomi delle pizze devono essere unici"));
@@ -102,14 +103,15 @@ public class PizzeriaController {
 		}
 	}
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/pizzas/delete/{id}")
 	  public String delete(@PathVariable("id") Integer pizzaId, RedirectAttributes ra) {
 	    Optional<Pizza> result = repo.findById(pizzaId);
 	    if (result.isPresent()) {
 	      // repo.deleteById(bookId);
 	      result.get().setActive(false);
+	      repo.save(result.get());
 	      ra.addFlashAttribute("successMessage", "Pizza" + result.get().getName() + " cancellata!");
-	      return "redirect:/";
+	      return "redirect:/pizzas";
 	    } else {
 	      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
 	          "La pizza numero " + pizzaId + " non è presente nel menù");
