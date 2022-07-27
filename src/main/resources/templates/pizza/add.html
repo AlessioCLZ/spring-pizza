@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <th:block th:replace="fragments :: risorse-head"></th:block>
-    <title>New Pizza</title> 
+    <title>Pizza edit</title> 
   </head>
   <body>
   	<nav th:replace="fragments :: navbar('pizzas')"></nav>
   	<div class="container">
-  		<h1></h1>
+  		<h1 th:text="${pizza.id != null} ? 'Modifica Pizza' : 'Nuova Pizza'"></h1>
   		<hr/>
  
   		
@@ -42,7 +42,14 @@
   				<label class="form-label" for="description">Descrizione</label>
 	  			<textarea id="synopsis" class="form-control" th:field="*{description}" rows="5"></textarea>
   			</div>
-  			
+			  <div class="col-4">
+				<h4>Ingredienti</h4>
+				<div class="form-check" th:each="i : ${ingList}">
+				  <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:id="|ingredient_${i.id}|" th:value="${i.id}">
+				  <label class="form-check-label" th:for="|ingredient_${i.id}|" th:text="${i.name}"></label>
+				</div>
+				
+			</div>
   			<div>
   				<button type="submit" class="btn btn-danger">Salva</button>
   				<a class="btn btn-danger" href="/pizzas">Annulla</a>

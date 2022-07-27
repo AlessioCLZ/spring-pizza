@@ -19,7 +19,7 @@
               <th>Nome</th>
               <th>Descrizione</th>
               <th>Prezzo</th>
-              
+              <th>Ingredienti</th>
             </tr>
           </thead>
           <tbody>
@@ -27,6 +27,11 @@
               <td th:text="${p.name}"></td>
               <td th:text="${p.description}"></td>
               <td th:text="${p.getFormattedPrice(p.price)}"></td>
+              <td>
+                <ul>
+                  <li th:each="i : ${p.ingredients}" th:text="${i.name}"></li>
+                </ul>
+              </td>
               <td>
                 <a class="btn btn-danger" th:href="@{|/pizzas/delete/${p.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
                   <i class="fa-solid fa-trash-can"></i>

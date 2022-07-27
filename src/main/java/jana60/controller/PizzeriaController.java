@@ -59,6 +59,7 @@ public class PizzeriaController {
 	@GetMapping("/pizzas/add")
 	public String pizzaForm(Model model) {
 	    model.addAttribute("pizza", new Pizza());
+	    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
 	    return "/pizza/add";
 	  }
 	
@@ -83,7 +84,8 @@ public class PizzeriaController {
 				
 		if (hasErrors) 
 		{
-	      return "/pizza/add";
+		    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
+			return "/pizza/add";
 	    } 
 		else 
 		{
@@ -94,6 +96,7 @@ public class PizzeriaController {
 	    	catch (Exception e)
 	    	{
 	    		model.addAttribute("errorMessage", "Non è possibile salvare la pizza inserita");
+	    	    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
 	    		return "/pizza/add";
 	    	}
 	      return "redirect:/pizzas"; 
@@ -124,6 +127,7 @@ public class PizzeriaController {
 		if(result.isPresent())
 		{
 			model.addAttribute("pizza", result.get());
+		    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
 			return "/pizza/add";
 		}
 		else

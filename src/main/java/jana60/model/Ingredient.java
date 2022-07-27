@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 
@@ -24,8 +22,6 @@ public class Ingredient {
 	private String name;
 	
 	@ManyToMany
-	@JoinTable(name = "pizza_ingredient", joinColumns = {@JoinColumn(name = "ingredient_id")},
-    inverseJoinColumns = {@JoinColumn(name = "pizza_id")})
 	private List<Pizza> pizzas;
 
 	public Integer getId() {
@@ -52,4 +48,8 @@ public class Ingredient {
 		this.pizzas = pizzas;
 	}
 	
+	public int getNumberofPizzas()
+	{
+		return pizzas.size();
+	}
 }
