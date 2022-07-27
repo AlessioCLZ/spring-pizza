@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jana60.model.Ingredient;
 import jana60.model.Pizza;
+import jana60.repository.IngredientRepository;
 import jana60.repository.PizzaRepository;
 
 @Controller
@@ -28,6 +30,9 @@ public class PizzeriaController {
 
 	@Autowired
 	private PizzaRepository repo;
+	
+	@Autowired
+	private IngredientRepository ingRepo;
 	
 	@GetMapping
 	public String index (Model model)
@@ -41,6 +46,14 @@ public class PizzeriaController {
 		List<Pizza> pizzaList = (List<Pizza>) repo.findAll();
 		model.addAttribute("pizzaList", pizzaList);
 		return "/pizza/list";
+	}
+	
+	@GetMapping("/ingredients")
+	public String ingredients(Model model)
+	{
+		model.addAttribute("ingList",ingRepo.findAllByOrderByName());
+		model.addAttribute("newIngredient", new Ingredient());
+		return "/ingredient/list";
 	}
 	
 	@GetMapping("/pizzas/add")
@@ -87,6 +100,22 @@ public class PizzeriaController {
 	    }
 	  }
 	
+	@PostMapping("ingredients/save")
+	  public String saveIngredient(@Valid @ModelAttribute("newIngredient") Ingredient formIngredient,
+	      BindingResult br, Model model) {
+	    if (br.hasErrors()) {
+	      // ricarico la pagina
+	      model.addAttribute("ingList", ingRepo.findAllByOrderByName());
+	      return "ingredient/list";
+
+	    } else {
+	      // salvo la category
+	      ingRepo.save(formIngredient);
+	      return "redirect:/ingredients";
+	    }
+
+	  }
+	
 	@GetMapping("/pizzas/edit/{id}")
 	public String edit(@PathVariable("id") Integer pizzaId, Model model)
 	{
@@ -116,8 +145,6 @@ public class PizzeriaController {
 	      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
 	          "La pizza numero " + pizzaId + " non è presente nel menù");
 	    }
-
-
 	  }
 	
 }

@@ -1,6 +1,7 @@
 package jana60.model;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
@@ -33,6 +35,9 @@ public class Pizza {
 	private Double price;
 	
 	private boolean active = true;
+	
+	@ManyToMany(mappedBy = "pizzas")
+	private List<Ingredient> ingredients;
 
 	public boolean isActive() {
 		return active;
@@ -74,6 +79,15 @@ public class Pizza {
 		this.price = price;
 	}
 	
+	
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+
 	public String getFormattedPrice(Double price)
 	{
 		DecimalFormat df = new DecimalFormat ("#.00€");

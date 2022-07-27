@@ -1,0 +1,58 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="fragments :: risorse-head"></th:block>
+    <title>Ingredients list</title>
+    
+  </head>
+  <body >
+    <div th:replace="fragments :: navbar('ingredients')"></div>
+    <div class="container text-center w-75 mt-3">
+        <div class="col-6">
+            <h1>I nostri ingredienti</h1>
+            <hr/>
+            <form
+                        id="form-ingredient"
+                        th:object="${newIngredient}"
+                        th:action="@{/ingredients/save}"
+                        method="POST"
+                >
+                <div class="input-group mb-3 has-validation">
+                <input type="text" class="form-control" id="newIngredient" th:field="*{name}" aria-describedby="ingredient-button" placeholder="Inserisci un nuovo ingrediente" >
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Sei sicuro?')">Aggiungi</button>
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}">
+                    </ul>
+                </div>
+                </div>
+            </form>
+            <div th:if="${#lists.isEmpty(ingList)}">
+                <h1>Spiacenti, non ci sono ingredienti disponibili, al momento!</h1>
+            </div>
+            <div th:unless="${#lists.isEmpty(ingList)}">
+                <table class="table mb-5">
+                <thead>
+                    <tr>
+                    <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="i : ${ingList}">
+                    <td th:text="${i.name}"></td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{|/ingredients/delete/${i.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
+                        <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+      <hr/>
+    <footer>
+      <div th:replace="fragments :: footer"></div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
