@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="fragments :: risorse-head"></th:block>
+    <title>Pizza details</title>
+</head>
+<body>
+    <div th:replace="fragments :: navbar('pizzas')"></div>
+    <div class="container text-center w-75 mt-3">
+        <h1 th:text="${pizza.name}"></h1>
+        <hr/>
+        <div class="row">
+
+            <div class="col-4 text-left">
+                <h2> Prezzo </h2>
+                <p th:text="${pizza.price}"></p>
+                <h2> Ingredienti</h2>
+                <ul th:each="i : ${pizza.ingredients}">
+                    <li th:text="${i.name}"></li>
+                </ul>
+            </div>
+            <div class="col-6 text-center">
+                <h2>Descrizione</h2>
+                <p class="text-justify" th:text="${pizza.description}"></p>
+            </div>
+        </div>
+        <a class="btn btn-danger rounded" href="/pizzas">Torna indietro</a>
+    </div>
+   <footer>
+        <div th:replace="fragments :: footer"></div>
+   </footer> 
+</body>
+</html>

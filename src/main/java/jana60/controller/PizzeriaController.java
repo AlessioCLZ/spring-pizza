@@ -137,6 +137,24 @@ public class PizzeriaController {
 		}
 	}
 	
+	@GetMapping("pizzas/{id}")
+	public String detail (@PathVariable("id") Integer pizzaId, Model model)
+	{
+		
+		Optional<Pizza> result = repo.findById(pizzaId);
+		
+		if(result.isPresent())
+		{
+			model.addAttribute("pizza", result.get());
+		    return "/pizza/detail";
+		}
+		else
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Questa pizza non è presente nel menù");
+		}
+		
+	}
+	
 	@GetMapping("/pizzas/delete/{id}")
 	  public String delete(@PathVariable("id") Integer pizzaId, RedirectAttributes ra) {
 	    Optional<Pizza> result = repo.findById(pizzaId);

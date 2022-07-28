@@ -33,12 +33,16 @@
                 </ul>
               </td>
               <td>
-                <a class="btn btn-danger" th:href="@{|/pizzas/delete/${p.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
-                  <i class="fa-solid fa-trash-can"></i>
+                <a class="btn btn-danger" th:href="@{|/pizzas/${p.id}|}" title="Detail">
+                  <i class="fa-solid fa-info"></i>
                 </a>
                 <a class="btn btn-danger" th:href="@{|/pizzas/edit/${p.id}|}" title="Edit">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </a>
+                <a class="btn btn-danger" th:href="@{|/pizzas/delete/${p.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
+                  <i class="fa-solid fa-trash-can"></i>
+                </a>
+               
               </td>
             </tr>
           </tbody>
