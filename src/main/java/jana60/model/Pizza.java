@@ -36,7 +36,7 @@ public class Pizza {
 	
 	private boolean active = true;
 	
-	@ManyToMany(mappedBy = "pizzas")
+	@ManyToMany
 	private List<Ingredient> ingredients;
 
 	public boolean isActive() {

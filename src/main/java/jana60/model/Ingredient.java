@@ -21,7 +21,7 @@ public class Ingredient {
 	@Column(nullable = false)
 	private String name;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy= "ingredients")
 	private List<Pizza> pizzas;
 
 	public Integer getId() {
