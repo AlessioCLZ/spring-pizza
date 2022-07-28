@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
@@ -38,6 +39,17 @@ public class Pizza {
 	
 	@ManyToMany
 	private List<Ingredient> ingredients;
+	
+	@OneToMany(mappedBy = "pizza")
+	private List<Image> images;
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
 
 	public boolean isActive() {
 		return active;
