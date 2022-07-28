@@ -48,8 +48,8 @@ public class Ingredient {
 		this.pizzas = pizzas;
 	}
 	
-	public int getNumberofPizzas()
+	public int getNumberOfPizzas()
 	{
-		return pizzas.size();
+		return this.pizzas.size();
 	}
 }

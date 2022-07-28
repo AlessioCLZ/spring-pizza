@@ -28,10 +28,20 @@
 							<li class="nav-item">
 	                            <a class="nav-link" th:classAppend= "${current == 'ingredients'} ? active : not-active" href="/ingredients">Ingredienti</a>
 	                        </li>
+							<li class="nav-item">
+	                            <a class="nav-link" th:classAppend= "${current == 'search'} ? active : not-active" href="/advanced_search">Ricerca</a>
+	                        </li>
 	                    </ul>
 	                </div>
+					<form action="/search">
+							<button class="btn btn-danger d-inline" title="Search">
+							<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+							<input class="form-control rounded d-inline" type="text" name="queryName">
+					</form>
 	            </nav>
 	        </div>
+
 	    <th:block>
     </main>
     <footer>

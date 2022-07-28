@@ -38,11 +38,13 @@
                 </thead>
                 <tbody>
                     <tr th:each="i : ${ingList}">
-                        <td th:text="${i.name}"></td>
-                        <td>
-                            <a class="btn btn-danger" th:href="@{|/ingredients/delete/${i.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
-                            <i class="fa-solid fa-trash-can"></i>
-                            </a>
+                        <td >
+                            <span th:text="${i.name}"></span>
+                            <span 
+                                class="badge rounded-pill text-bg-danger" 
+                                th:text="${i.pizzas.size()}" 
+                                th:if="${i.getNumberOfPizzas() > 0}">
+                            </span>
                         </td>
                     </tr>
                 </tbody>

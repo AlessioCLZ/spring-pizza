@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -151,4 +152,23 @@ public class PizzeriaController {
 	    }
 	  }
 	
+	
+	// Mappatura della ricerca
+	
+	@GetMapping("/search")
+	  public String search(@RequestParam(name = "queryName") String queryName, Model model) {
+
+	    if (queryName != null && queryName.isEmpty()) {
+	    	queryName = null;
+	    }
+
+	    List<Pizza> pizzas = repo.findByNameContainingIgnoreCase(queryName);
+	    model.addAttribute("pizzaList", pizzas);
+	    return "/pizza/list";
+	  }
+	
+	@GetMapping("/advanced_search")
+	  public String advancedSearch() {
+	    return "search";
+	  }
 }
