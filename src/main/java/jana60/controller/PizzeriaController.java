@@ -67,6 +67,7 @@ public class PizzeriaController {
 	public String pizzaForm(Model model) {
 	    model.addAttribute("pizza", new Pizza());
 	    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
+	    model.addAttribute("imageForm", new ImageForm());
 	    return "/pizza/add";
 	  }
 	
@@ -135,6 +136,7 @@ public class PizzeriaController {
 		{
 			model.addAttribute("pizza", result.get());
 		    model.addAttribute("ingList", ingRepo.findAllByOrderByName());
+		    model.addAttribute("imageForm", service.createImageForm(pizzaId));
 			return "/pizza/add";
 		}
 		else
@@ -151,7 +153,8 @@ public class PizzeriaController {
 		
 		if(result.isPresent())
 		{
-			model.addAttribute("pizza", result.get());
+			Pizza modelPizza = result.get();
+			model.addAttribute("pizza", modelPizza);
 		    return "/pizza/detail";
 		}
 		else
@@ -205,13 +208,17 @@ public class PizzeriaController {
 	  public String saveImage(@PathVariable("id") Integer pizzaId, @ModelAttribute("imageForm") ImageForm imageForm) {
 	    // devo salvare l'immagine su database
 	    try {
+	    	imageForm.setPizza(repo.findById(pizzaId).get());
 	      service.createImage(imageForm);
-	      return "redirect:/pizzas/detail/{pizzaId}";
+	      return "redirect:/pizzas/edit" + pizzaId;
 	    } catch (IOException e) {
 	      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to save image");
 	    }
 	  }
 	
+	/*
+	   * Controller che in base all'id dell'Image restituisce il contenuto
+	   */
 	@RequestMapping(value = "image/{imageId}/content", produces = MediaType.IMAGE_JPEG_VALUE)
 	  public ResponseEntity<byte[]> getImageContent(@PathVariable("imageId") Integer imageId) {
 	    // recupero il content dal database
