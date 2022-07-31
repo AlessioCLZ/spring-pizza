@@ -204,21 +204,21 @@ public class PizzeriaController {
 	@Autowired
 	  private ImageService service;
 	
-	@PostMapping("image/save/{id}")
+	@PostMapping("image/save/{id}") //faccio il form di salvataggio immagini solo dentro la pagina di edit pizze
 	  public String saveImage(@PathVariable("id") Integer pizzaId, @ModelAttribute("imageForm") ImageForm imageForm) {
 	    // devo salvare l'immagine su database
 	    try {
 	    	imageForm.setPizza(repo.findById(pizzaId).get());
 	      service.createImage(imageForm);
-	      return "redirect:/pizzas/edit" + pizzaId;
+	      return "redirect:/pizzas/edit/" + pizzaId;
 	    } catch (IOException e) {
 	      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to save image");
 	    }
 	  }
 	
 	/*
-	   * Controller che in base all'id dell'Image restituisce il contenuto
-	   */
+	 * Controller che in base all'id dell'Image restituisce il contenuto
+	 */
 	@RequestMapping(value = "image/{imageId}/content", produces = MediaType.IMAGE_JPEG_VALUE)
 	  public ResponseEntity<byte[]> getImageContent(@PathVariable("imageId") Integer imageId) {
 	    // recupero il content dal database
@@ -230,4 +230,5 @@ public class PizzeriaController {
 	    return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
 	  }
 	
+	  
 }

@@ -15,6 +15,7 @@
                         th:object="${newIngredient}"
                         th:action="@{/ingredients/save}"
                         method="POST"
+                        sec:authorize="hasAuthority('ADMIN')"
                 >
                 <div class="input-group mb-3 has-validation">
                 <input type="text" class="form-control" id="newIngredient" th:field="*{name}" aria-describedby="ingredient-button" placeholder="Inserisci un nuovo ingrediente" >

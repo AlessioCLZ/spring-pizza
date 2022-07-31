@@ -33,13 +33,13 @@
                 </ul>
               </td>
               <td>
-                <a class="btn btn-danger" th:href="@{|/pizzas/${p.id}|}" title="Detail">
+                <a class="btn btn-danger" th:href="@{|/pizzas/${p.id}|}" sec:authorize="hasAuthority('USER')" title="Detail">
                   <i class="fa-solid fa-info"></i>
                 </a>
-                <a class="btn btn-danger" th:href="@{|/pizzas/edit/${p.id}|}" title="Edit">
+                <a class="btn btn-danger" th:href="@{|/pizzas/edit/${p.id}|}" sec:authorize="hasAuthority('ADMIN')" title="Edit">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </a>
-                <a class="btn btn-danger" th:href="@{|/pizzas/delete/${p.id}|}" title="Delete" onclick="return confirm('Sei sicuro?')">
+                <a class="btn btn-danger" th:href="@{|/pizzas/delete/${p.id}|}" sec:authorize="hasAuthority('ADMIN')" title="Delete" onclick="return confirm('Sei sicuro?')">
                   <i class="fa-solid fa-trash-can"></i>
                 </a>
                
@@ -50,8 +50,8 @@
       </div>
       <hr/>
     <div class= "mt-5">
-      	<h2>
-      		Vuoi aggiungere una nuova pizza al menù? <span><a class="btn btn-danger" th:href="@{/pizzas/add}">Clicca qui!</a></span>
+      	<h2 sec:authorize="hasAuthority('ADMIN')">
+      		Vuoi aggiungere una nuova pizza al menù? <span><a class="btn btn-danger"  th:href="@{/pizzas/add}">Clicca qui!</a></span>
       	</h2>
       </div>
     </div>

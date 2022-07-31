@@ -14,7 +14,7 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Lob
+	@Lob //long text 
 	private byte[] content;
 	
 	@ManyToOne

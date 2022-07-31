@@ -11,7 +11,8 @@ import jana60.model.security.User;
 
 public class DatabaseUserDetails implements UserDetails {
 
-  private String username;
+  private static final long serialVersionUID = 1L; //questo è per la connessione al server, nulla di importante al momento
+private String username;
   private String password;
   private Set<GrantedAuthority> authorities;
 
