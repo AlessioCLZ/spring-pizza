@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +77,7 @@ public class APIController {
 			pizzaToWorkOn.setIngredients(null); //cancello il collegamento della pizza agli ingredienti e faccio update del DB
 			pizzaRepo.save(pizzaToWorkOn);
 			
-			deleteImageByPizzaId(id);
+			deleteImagesByPizzaId(id);
 			
 			pizzaRepo.deleteById(id);
 			
@@ -89,8 +90,8 @@ public class APIController {
 		}
 	}
 
-	@DeleteMapping("/pizzas/{id}/images")
-	private void deleteImageByPizzaId(@PathVariable Integer pizzaId) {
+	@DeleteMapping("/pizzas/{pizzaId}/images")
+	private void deleteImagesByPizzaId(@PathVariable Integer pizzaId) {
 		Optional<Pizza> optionalPizza = pizzaRepo.findById(pizzaId);
 		if(optionalPizza.isPresent())
 		{
@@ -104,6 +105,23 @@ public class APIController {
 		else
 		{
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza non trovata");
+		}
+	}
+	
+	@PutMapping("/pizzas/{id}")
+	public Pizza update (@PathVariable Integer id, @Valid @RequestBody Pizza pizza)
+	{
+		Optional<Pizza> updatePizza = pizzaRepo.findById(id);
+		
+		if(updatePizza.isPresent())
+		{
+			pizza.setId(id);
+			return pizzaRepo.save(pizza);			
+		}
+		else
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza non trovata");
+
 		}
 	}
 	
