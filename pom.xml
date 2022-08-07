@@ -15,8 +15,7 @@
 	<description>Progetto pizzeria su utilizzo form, post e validazioni</description>
 	<properties>
 		<java.version>11</java.version>
-	</properties>
-	
+	</properties>	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

@@ -16,6 +16,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pizza {
 
@@ -38,6 +40,7 @@ public class Pizza {
 	private boolean active = true;
 	
 	@ManyToMany
+	@JsonManagedReference
 	private List<Ingredient> ingredients;
 	
 	@OneToMany(mappedBy = "pizza")
