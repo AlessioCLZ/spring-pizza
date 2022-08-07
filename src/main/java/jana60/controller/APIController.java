@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import jana60.model.Image;
+import jana60.model.Ingredient;
 import jana60.model.Pizza;
 import jana60.repository.ImageRepository;
 import jana60.repository.IngredientRepository;
@@ -47,7 +48,7 @@ public class APIController {
 	}
 	
 	@GetMapping("/pizzas/{id}") //single item getter
-	public Pizza getById(@PathVariable Integer id)
+	public Pizza getPizzaById(@PathVariable Integer id)
 	{
 		Optional<Pizza> pizza = pizzaRepo.findById(id);
 		if(pizza.isPresent()) 
@@ -121,9 +122,45 @@ public class APIController {
 		else
 		{
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza non trovata");
-
 		}
 	}
 	
 	
+	@GetMapping("/ingredients/{id}") //single item getter
+	public Ingredient getIngredientById(@PathVariable Integer id)
+	{
+		Optional<Ingredient> ingredient = ingRepo.findById(id);
+		if(ingredient.isPresent()) 
+			return ingredient.get();
+		else
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingrediente non trovato");
+	}
+	
+	@PostMapping
+	public Ingredient newIngredient (@Valid @RequestBody Ingredient ingredient)
+	{
+		try {
+			return ingRepo.save(ingredient);
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Impossibile aggiungere l'ingrediente alla lista");
+		}
+	}
+	
+	@DeleteMapping("/ingredients/{id}")
+	public String deleteIngredientById (@PathVariable Integer id)
+	{
+		Optional<Ingredient> ingredientToDelete = ingRepo.findById(id);
+		if (ingredientToDelete.isPresent())
+		{
+			ingredientToDelete.get().setPizzas(null);
+			ingRepo.save(ingredientToDelete.get());	
+			ingRepo.deleteById(id);
+			return "Ingrediente con id " +id+ " cancellato";
+		}
+		else
+		{
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingrediente non trovato");
+		}
+		
+	}
 }
